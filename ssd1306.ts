@@ -84,6 +84,7 @@ namespace oled {
         }
     }
 
+    //% block="draw pixel x %x y %y"
     export function drawPixel(x: number, y: number) {
 
         if (!initialized) return
@@ -92,6 +93,16 @@ namespace oled {
 
         let index = x + (Math.idiv(y, 8) * WIDTH)
         buffer[index] |= (1 << (y % 8))
+    }
+
+    export function drawText(text: string, x: number, y: number) {
+
+        for (let i = 0; i < text.length; i++) {
+
+            drawChar(text.charAt(i), x, y)
+
+            x += 6   // 5 Pixel Zeichen + 1 Pixel Abstand
+        }
     }
 
     function drawChar(c: string, x: number, y: number) {

@@ -16,4 +16,9 @@ namespace witelo {
     export function update() {
         oled.update
     }
+
+    //% block="draw text %text at x %x y %y"
+    export function drawText(text: string, x: number, y: number) {
+        oled.drawText(text, x, y)
+    }
 }
