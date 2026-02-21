@@ -63,18 +63,19 @@ namespace oled {
         cmd(0x14)
 
         cmd(0xAF) // display on
-
+        
+        initialized = true
         clear()
         update()
-        initialized = true
     }
 
     export function clear() {
+        if (!initialized) init()
         buffer.fill(0)
     }
 
     export function update() {
-
+        if (!initialized) init()
         for (let page = 0; page < 8; page++) {
             cmd(0xB0 + page)
             cmd(0x00)
@@ -86,8 +87,7 @@ namespace oled {
 
     //% block="draw pixel x %x y %y"
     export function drawPixel(x: number, y: number) {
-
-        if (!initialized) return
+        if (!initialized) init()
         if (x < 0 || x >= WIDTH) return
         if (y < 0 || y >= HEIGHT) return
 
@@ -96,29 +96,20 @@ namespace oled {
     }
 
     export function drawText(text: string, x: number, y: number) {
-
+        if (!initialized) init()
         for (let i = 0; i < text.length; i++) {
-
             drawChar(text.charAt(i), x, y)
-
             x += 6   // 5 Pixel Zeichen + 1 Pixel Abstand
         }
     }
 
     function drawChar(c: string, x: number, y: number) {
-
         let code = c.charCodeAt(0)
-
         if (code < 32 || code > 127) return
-
         let charData = font5x7[code - 32]
-
         for (let col = 0; col < 5; col++) {
-
             let line = charData[col]
-
             for (let row = 0; row < 7; row++) {
-
                 if ((line >> row) & 1) {
                     drawPixel(x + col, y + row)
                 }

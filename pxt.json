@@ -4,7 +4,7 @@
     "description": "",
     "dependencies": {
         "core": "*",
-        "v3": "*"
+        "v1": "*"
     },
     "files": [
         "README.md",
