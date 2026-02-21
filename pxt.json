@@ -12,7 +12,9 @@
         "main.ts",
         "ssd1306.ts",
         "font5x7.ts",
-        "witelo.ts"
+        "witelo.ts",
+        "aht2x.ts",
+        "ens160.ts"
     ],
     "testFiles": [
         "test.ts"
