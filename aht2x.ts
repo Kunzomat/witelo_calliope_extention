@@ -1,6 +1,4 @@
-//% color=#2E8B57 icon="\uf2c9"
-//% groups=["Messwerte", "Erweitert"]
-namespace witeloAHT2x {
+namespace aht2x {
 
     const ADDR = 0x38
     let initialized = false
@@ -34,8 +32,6 @@ namespace witeloAHT2x {
         return pins.i2cReadBuffer(ADDR, 6)
     }
 
-    //% group="Messwerte"
-    //% weight=100
     //% block="Temperatur (°C)"
     export function temperature(): number {
 
@@ -45,8 +41,6 @@ namespace witeloAHT2x {
         return (raw * 200 / 1048576) - 50
     }
 
-    //% group="Messwerte"
-    //% weight=90
     //% block="Luftfeuchte (%)"
     export function humidity(): number {
 

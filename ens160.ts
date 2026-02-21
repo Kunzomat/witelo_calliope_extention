@@ -1,6 +1,4 @@
-//% color=#4682B4 icon="\uf0c2"
-//% groups=["Messwerte", "Erweitert"]
-namespace witeloENS160 {
+namespace ens160 {
 
     const ADDR = 0x53
     let initialized = false
@@ -31,22 +29,16 @@ namespace witeloENS160 {
         return pins.i2cReadNumber(ADDR, NumberFormat.UInt16LE)
     }
 
-    //% group="Messwerte"
-    //% weight=100
     //% block="Luftqualität (AQI)"
     export function aqi(): number {
         return readReg8(0x21)
     }
 
-    //% group="Messwerte"
-    //% weight=90
     //% block="TVOC (ppb)"
     export function tvoc(): number {
         return readReg16(0x22)
     }
 
-    //% group="Messwerte"
-    //% weight=80
     //% block="eCO2 (ppm)"
     export function eco2(): number {
         return readReg16(0x24)
