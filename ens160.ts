@@ -1,6 +1,6 @@
 namespace ens160 {
 
-    const ADDR = 0x53
+    const ADDR = 0x52
     let initialized = false
 
     function init() {

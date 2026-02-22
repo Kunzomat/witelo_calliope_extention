@@ -4,7 +4,8 @@
     "description": "",
     "dependencies": {
         "core": "*",
-        "v1": "*"
+        "v1": "*",
+        "neopixel": "github:microsoft/pxt-neopixel#v0.7.6"
     },
     "files": [
         "README.md",
@@ -14,7 +15,8 @@
         "font5x7.ts",
         "witelo.ts",
         "aht2x.ts",
-        "ens160.ts"
+        "ens160.ts",
+        "bmp280.ts"
     ],
     "testFiles": [
         "test.ts"
