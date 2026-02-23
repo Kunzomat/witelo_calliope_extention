@@ -1,7 +1,8 @@
 namespace bmp280 {
 
-    const ADDR = 0x76  // ggf. 0x77
+    const ADDR = 0x76
     let initialized = false
+
     let dig_T1 = 0
     let dig_T2 = 0
     let dig_T3 = 0
@@ -14,82 +15,99 @@ namespace bmp280 {
     let dig_P7 = 0
     let dig_P8 = 0
     let dig_P9 = 0
-    let t_fine = 0
+
+    let T = 0
+    let P = 0
+
+    function getreg(reg: number): number {
+        pins.i2cWriteNumber(ADDR, reg, NumberFormat.UInt8BE)
+        return pins.i2cReadNumber(ADDR, NumberFormat.UInt8BE)
+    }
+
+    function getUInt16LE(reg: number): number {
+        pins.i2cWriteNumber(ADDR, reg, NumberFormat.UInt8BE)
+        return pins.i2cReadNumber(ADDR, NumberFormat.UInt16LE)
+    }
+
+    function getInt16LE(reg: number): number {
+        pins.i2cWriteNumber(ADDR, reg, NumberFormat.UInt8BE)
+        return pins.i2cReadNumber(ADDR, NumberFormat.Int16LE)
+    }
+
+    export function init() {
+
+        dig_T1 = getUInt16LE(0x88)
+        dig_T2 = getInt16LE(0x8A)
+        dig_T3 = getInt16LE(0x8C)
+
+        dig_P1 = getUInt16LE(0x8E)
+        dig_P2 = getInt16LE(0x90)
+        dig_P3 = getInt16LE(0x92)
+        dig_P4 = getInt16LE(0x94)
+        dig_P5 = getInt16LE(0x96)
+        dig_P6 = getInt16LE(0x98)
+        dig_P7 = getInt16LE(0x9A)
+        dig_P8 = getInt16LE(0x9C)
+        dig_P9 = getInt16LE(0x9E)
+
+        // Normal mode
+        pins.i2cWriteNumber(ADDR, 0xF4 << 8 | 0x2F, NumberFormat.UInt16BE)
+        pins.i2cWriteNumber(ADDR, 0xF5 << 8 | 0x0C, NumberFormat.UInt16BE)
+
+        initialized = true
+    }
 
     function ensureInit() {
         if (!initialized) init()
     }
 
-    export function init() {
+    function update(): void {
 
-        // Normal Mode, oversampling x1
-        pins.i2cWriteNumber(ADDR, 0xF4 << 8 | 0x27, NumberFormat.UInt16BE)
-
-        // Calibration lesen
-        pins.i2cWriteNumber(ADDR, 0x88, NumberFormat.UInt8BE)
-        let cal = pins.i2cReadBuffer(ADDR, 24)
-
-        dig_T1 = cal[0] | (cal[1] << 8)
-        dig_T2 = (cal[2] | (cal[3] << 8)) << 16 >> 16
-        dig_T3 = (cal[4] | (cal[5] << 8)) << 16 >> 16
-
-        dig_P1 = cal[6] | (cal[7] << 8)
-        dig_P2 = (cal[8] | (cal[9] << 8)) << 16 >> 16
-        dig_P3 = (cal[10] | (cal[11] << 8)) << 16 >> 16
-        dig_P4 = (cal[12] | (cal[13] << 8)) << 16 >> 16
-        dig_P5 = (cal[14] | (cal[15] << 8)) << 16 >> 16
-        dig_P6 = (cal[16] | (cal[17] << 8)) << 16 >> 16
-        dig_P7 = (cal[18] | (cal[19] << 8)) << 16 >> 16
-        dig_P8 = (cal[20] | (cal[21] << 8)) << 16 >> 16
-        dig_P9 = (cal[22] | (cal[23] << 8)) << 16 >> 16
-
-        initialized = true
-    }
-
-    function readRaw(): number[] {
         ensureInit()
-        pins.i2cWriteNumber(ADDR, 0xF7, NumberFormat.UInt8BE)
-        let data = pins.i2cReadBuffer(ADDR, 6)
 
-        let adc_P = (data[0] << 12) | (data[1] << 4) | (data[2] >> 4)
-        let adc_T = (data[3] << 12) | (data[4] << 4) | (data[5] >> 4)
-
-        return [adc_T, adc_P]
-    }
-
-    export function temperature(): number {
-        let raw = readRaw()
-        let adc_T = raw[0]
+        let adc_T =
+            (getreg(0xFA) << 12) +
+            (getreg(0xFB) << 4) +
+            (getreg(0xFC) >> 4)
 
         let var1 = (((adc_T >> 3) - (dig_T1 << 1)) * dig_T2) >> 11
         let var2 = (((((adc_T >> 4) - dig_T1) * ((adc_T >> 4) - dig_T1)) >> 12) * dig_T3) >> 14
 
-        t_fine = var1 + var2
-        return dig_T1//((t_fine * 5 + 128) >> 8) / 100
+        let t = var1 + var2
+        T = Math.idiv(((t * 5 + 128) >> 8), 100)
 
+        var1 = (t >> 1) - 64000
+        var2 = (((var1 >> 2) * (var1 >> 2)) >> 11) * dig_P6
+        var2 = var2 + ((var1 * dig_P5) << 1)
+        var2 = (var2 >> 2) + (dig_P4 << 16)
+
+        var1 = (((dig_P3 * ((var1 >> 2) * (var1 >> 2)) >> 13) >> 3) +
+            ((dig_P2 * var1) >> 1)) >> 18
+
+        var1 = ((32768 + var1) * dig_P1) >> 15
+        if (var1 == 0) return
+
+        let adc_P =
+            (getreg(0xF7) << 12) +
+            (getreg(0xF8) << 4) +
+            (getreg(0xF9) >> 4)
+
+        let _p = ((1048576 - adc_P) - (var2 >> 12)) * 3125
+        _p = Math.idiv(_p, var1) * 2
+
+        var1 = (dig_P9 * (((_p >> 3) * (_p >> 3)) >> 13)) >> 12
+        var2 = (((_p >> 2)) * dig_P8) >> 13
+
+        P = _p + ((var1 + var2 + dig_P7) >> 4)
+    }
+
+    export function temperature(): number {
+        update()
+        return T
     }
 
     export function pressure(): number {
-        temperature()
-        let raw = readRaw()
-        let adc_P = raw[1]
-
-        let var1 = t_fine - 128000
-        let var2 = var1 * var1 * dig_P6
-        var2 = var2 + ((var1 * dig_P5) << 17)
-        var2 = var2 + (dig_P4 << 35)
-        var1 = ((var1 * var1 * dig_P3) >> 8) + ((var1 * dig_P2) << 12)
-        var1 = (((1 << 47) + var1) * dig_P1) >> 33
-
-        if (var1 == 0) return 0
-
-        let p = 1048576 - adc_P
-        p = (((p << 31) - var2) * 3125) / var1
-        var1 = (dig_P9 * (p >> 13) * (p >> 13)) >> 25
-        var2 = (dig_P8 * p) >> 19
-
-        p = ((p + var1 + var2) >> 8) + (dig_P7 << 4)
-
-        return p / 256 / 100   // hPa
+        update()
+        return Math.idiv(P, 100)  // hPa
     }
 }
