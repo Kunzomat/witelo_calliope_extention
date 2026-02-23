@@ -54,7 +54,7 @@ namespace witelo {
         return 42//bmp280.pressure()
     }
     //% group="ENS160"
-    //% block="Luftqualitätsindex (1-)"
+    //% block="Luftqualitätsindex"
     export function api_ens160(): number {
         return ens160.aqi()
     }

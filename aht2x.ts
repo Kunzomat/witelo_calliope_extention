@@ -32,7 +32,6 @@ namespace aht2x {
         return pins.i2cReadBuffer(ADDR, 6)
     }
 
-    //% block="Temperatur (°C)"
     export function temperature(): number {
 
         let data = readRaw()
@@ -41,7 +40,6 @@ namespace aht2x {
         return (raw * 200 / 1048576) - 50
     }
 
-    //% block="Luftfeuchte (%)"
     export function humidity(): number {
 
         let data = readRaw()

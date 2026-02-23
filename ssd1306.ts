@@ -85,7 +85,6 @@ namespace oled {
         }
     }
 
-    //% block="draw pixel x %x y %y"
     export function drawPixel(x: number, y: number) {
         if (!initialized) init()
         if (x < 0 || x >= WIDTH) return
