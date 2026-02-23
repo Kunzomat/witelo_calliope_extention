@@ -53,4 +53,19 @@ namespace witelo {
     export function pressure_bmp280(): number {
         return 42//bmp280.pressure()
     }
+    //% group="ENS160"
+    //% block="Luftqualitätsindex (1-)"
+    export function api_ens160(): number {
+        return ens160.aqi()
+    }
+    //% group="ENS160"
+    //% block="TVOCs (ppb)"
+    export function tvoc_ens160(): number {
+        return ens160.tvoc()
+    }
+    //% group="ENS160"
+    //% block="CO2 Äquivalent (ppm)"
+    export function eco2_ens160(): number {
+        return ens160.eco2()
+    }
 }
