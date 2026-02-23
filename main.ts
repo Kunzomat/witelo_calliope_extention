@@ -1,5 +1,3 @@
-let strip = neopixel.create(DigitalPin.P0, 4, NeoPixelMode.RGB)
-strip.showRainbow(1, 360)
 basic.forever(function () {
     witelo.clear()
     witelo.drawText("Birgits witelo Projekt", 0, 0)
