@@ -33,4 +33,24 @@ namespace witelo {
         oled.drawText(text, x, y)
         if (mode == UpdateMode.On) { oled.update() }
     }
+    //% group="AHT20"
+    //% block="Temperatur (°C)"
+    export function temperature_aht20(): number {
+        return aht2x.temperature()
+    }
+    //% group="AHT20"
+    //% block="Luftfeuchte (％)"
+    export function humidity_aht20(): number {
+        return aht2x.humidity()
+    }
+    //% group="BMP280"
+    //% block="Temperatur (°C)"
+    export function temperature_bmp280(): number {
+        return bmp280.temperature()
+    }
+    //% group="BMP280"
+    //% block="Luftdruck (hPa)"
+    export function pressure_bmp280(): number {
+        return 42//bmp280.pressure()
+    }
 }
