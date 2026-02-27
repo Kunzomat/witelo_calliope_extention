@@ -36,36 +36,26 @@ namespace witelo {
     //% group="AHT20"
     //% block="Temperatur (°C)"
     export function temperature_aht20(): number {
-        return aht2x.temperature()
+        return Math.round(aht2x.temperature() * 100) / 100
     }
     //% group="AHT20"
     //% block="Luftfeuchte (％)"
     export function humidity_aht20(): number {
-        return aht2x.humidity()
-    }
-    //% group="BMP280"
-    //% block="Temperatur (°C)"
-    export function temperature_bmp280(): number {
-        return bmp280.temperature()
-    }
-    //% group="BMP280"
-    //% block="Luftdruck (hPa)"
-    export function pressure_bmp280(): number {
-        return 42//bmp280.pressure()
+        return Math.round(aht2x.humidity() * 100) / 100
     }
     //% group="ENS160"
     //% block="Luftqualitätsindex"
     export function api_ens160(): number {
-        return ens160.aqi()
+        return ENS160.AQI()
     }
     //% group="ENS160"
     //% block="TVOCs (ppb)"
     export function tvoc_ens160(): number {
-        return ens160.tvoc()
+        return ENS160.TVOC()
     }
     //% group="ENS160"
     //% block="CO2 Äquivalent (ppm)"
     export function eco2_ens160(): number {
-        return ens160.eco2()
+        return ENS160.eCO2()
     }
 }
