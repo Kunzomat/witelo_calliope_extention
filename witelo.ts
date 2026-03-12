@@ -70,12 +70,12 @@ namespace witelo {
     }
     //% group="BMP280"
     //% block="Luftdruck"
-    export function pressure(): number {
+    export function pressure_bmp280(): number {
         return BMP280.pressure();
     }
     //% group="BMP280"
     //% block="Temperatur"
-    export function temperature(): number {
+    export function temperature_bmp280(): number {
         return BMP280.temperature();
     }
 }

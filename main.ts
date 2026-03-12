@@ -29,20 +29,12 @@ function ANT20_BPM280_PAGE () {
     witelo.drawText("Luftfeuchte", 0, 25, witelo.UpdateMode.Off)
     witelo.drawText(convertToText(witelo.humidity_aht20()), 95, 25, witelo.UpdateMode.Off)
     witelo.drawText("Temperatur (BMP)", 0, 35, witelo.UpdateMode.Off)
-    witelo.drawText(convertToText(witelo.temperature()), 95, 35, witelo.UpdateMode.Off)
+    witelo.drawText(convertToText(witelo.temperature_bmp280()), 95, 35, witelo.UpdateMode.Off)
     witelo.drawText("Luftdruck", 0, 45, witelo.UpdateMode.Off)
-    witelo.drawText(convertToText(witelo.pressure()), 95, 45, witelo.UpdateMode.Off)
+    witelo.drawText(convertToText(witelo.pressure_bmp280()), 95, 45, witelo.UpdateMode.Off)
 }
 function ANT20_BPM280_PAGE2 () {
-    witelo.drawText("AHT20 & BMP280", 0, 0, witelo.UpdateMode.Off)
-    witelo.drawText("Temperatur", 0, 15, witelo.UpdateMode.Off)
-    witelo.drawText(convertToText(witelo.temperature_aht20()), 95, 15, witelo.UpdateMode.Off)
-    witelo.drawText("Luftfeuchte", 0, 25, witelo.UpdateMode.Off)
-    witelo.drawText(convertToText(witelo.humidity_aht20()), 95, 25, witelo.UpdateMode.Off)
-    witelo.drawText("Temperatur (BMP)", 0, 35, witelo.UpdateMode.Off)
-    witelo.drawText(convertToText(witelo.temperature()), 95, 35, witelo.UpdateMode.Off)
-    witelo.drawText("Luftdruck", 0, 45, witelo.UpdateMode.Off)
-    witelo.drawText(convertToText(witelo.pressure()), 95, 45, witelo.UpdateMode.Off)
+    witelo.drawText("Naechster Sensor", 0, 0, witelo.UpdateMode.Off)
 }
 input.onButtonEvent(Button.B, input.buttonEventClick(), function () {
     page += -1
