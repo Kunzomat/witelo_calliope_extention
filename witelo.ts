@@ -58,4 +58,26 @@ namespace witelo {
     export function eco2_ens160(): number {
         return ENS160.eCO2()
     }
+    //% group="ENS160"
+    //% block="setze Temperatur temp %temp"
+    export function SetTemp(temp: number): void {
+        ENS160.setTemp(temp)
+    }
+    //% group="ENS160"
+    //% block="setze Luftfeuchtigkeit %rh"
+    export function SetHumidity(rh: number): void {
+        ENS160.setHumidity(rh)
+    }
+    //% group="BMP280"
+    //% block="Luftdruck"
+    export function pressure(): number {
+        //return BMP280.pressure();
+        return ENS160.eCO2()
+    }
+    //% group="BMP280"
+    //% block="Temperatur"
+    export function temperature(): number {
+        //return BMP280.temperature();
+        return ENS160.eCO2()
+    }
 }

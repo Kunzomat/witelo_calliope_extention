@@ -28,7 +28,6 @@ enum ENS160_STATUS {
     ENS160_STATUS_INVALID = 3,
 }
 
-//% weight=100 color=#80c010 icon="\uf042" block="ENS160"
 namespace ENS160 {
     // Default address
     let ENS160_I2C_ADDR = ENS160_I2C_ADDRESS.ADDR_0x53
@@ -198,7 +197,7 @@ namespace ENS160 {
     }
 
     // Set temp for compenstation
-    function setTemp(temp: number): void {
+    export function setTemp(temp: number): void {
         ensureInit()
         let temp_ = ((temp + 273.15) * 64) & 65535
 
@@ -218,7 +217,7 @@ namespace ENS160 {
     }
 
     // Set humidity for compenstation
-    function setHumidity(rh: number): void {
+    export function setHumidity(rh: number): void {
         ensureInit()
         let rh_ = (rh * 512) & 65535
 
@@ -252,26 +251,6 @@ namespace ENS160 {
     export function AQI(): number {
         get()
         return AQI_
-    }
-
-    /**
-     * set compensation temperature
-     */
-    //% blockId="ENS160_GET_SETTEMP" block="set temp %temp"
-    //% weight=20 blockGap=8 advanced=true
-    //% group="Environment compensation"
-    export function SetTemp(temp: number): void {
-        setTemp(temp)
-    }
-
-    /**
-     * set compensation humidity
-     */
-    //% blockId="ENS160_GET_SETRH" block="set humidity %rh"
-    //% weight=20 blockGap=8 advanced=true
-    //% group="Environment compensation"
-    export function SetHumidity(rh: number): void {
-        setHumidity(rh)
     }
 
 }

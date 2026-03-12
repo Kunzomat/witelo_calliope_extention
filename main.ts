@@ -1,17 +1,67 @@
-ENS160.SetTemp(witelo.temperature_aht20())
-ENS160.SetHumidity(witelo.humidity_aht20())
-basic.forever(function () {
-    witelo.clear()
-    witelo.drawText("- Witelo Raumklima -", 5, 0, witelo.UpdateMode.Off)
-    witelo.drawText("Luftfeuchte", 0, 15, witelo.UpdateMode.Off)
-    witelo.drawText(convertToText(witelo.humidity_aht20()), 95, 15, witelo.UpdateMode.Off)
-    witelo.drawText("Temperatur", 0, 25, witelo.UpdateMode.Off)
-    witelo.drawText(convertToText(witelo.temperature_aht20()), 95, 25, witelo.UpdateMode.Off)
+function startpage () {
+    witelo.drawText("- Witelo Sensor Test", 0, 0, witelo.UpdateMode.Off)
+}
+input.onButtonEvent(Button.A, input.buttonEventClick(), function () {
+    page += 1
+    if (page > 3) {
+        page = 0
+    }
+})
+function ENS160_PAGE () {
+    witelo.SetHumidity(witelo.humidity_aht20())
+    witelo.SetTemp(witelo.temperature_aht20())
+    witelo.drawText("ENS160 & AHT20", 0, 0, witelo.UpdateMode.Off)
+    witelo.drawText("Temperatur", 0, 15, witelo.UpdateMode.Off)
+    witelo.drawText(convertToText(witelo.temperature_aht20()), 95, 15, witelo.UpdateMode.Off)
+    witelo.drawText("Luftfeuchte", 0, 25, witelo.UpdateMode.Off)
+    witelo.drawText(convertToText(witelo.humidity_aht20()), 95, 25, witelo.UpdateMode.Off)
     witelo.drawText("Luftqualität", 0, 35, witelo.UpdateMode.Off)
     witelo.drawText(convertToText(witelo.api_ens160()), 95, 35, witelo.UpdateMode.Off)
     witelo.drawText("CO2 Äquivalent", 0, 45, witelo.UpdateMode.Off)
     witelo.drawText(convertToText(witelo.eco2_ens160()), 95, 45, witelo.UpdateMode.Off)
     witelo.drawText("TVOCs", 0, 55, witelo.UpdateMode.Off)
     witelo.drawText(convertToText(witelo.tvoc_ens160()), 95, 55, witelo.UpdateMode.Off)
+}
+function ANT20_BPM280_PAGE () {
+    witelo.drawText("AHT20 & BMP280", 0, 0, witelo.UpdateMode.Off)
+    witelo.drawText("Temperatur", 0, 15, witelo.UpdateMode.Off)
+    witelo.drawText(convertToText(witelo.temperature_aht20()), 95, 15, witelo.UpdateMode.Off)
+    witelo.drawText("Luftfeuchte", 0, 25, witelo.UpdateMode.Off)
+    witelo.drawText(convertToText(witelo.humidity_aht20()), 95, 25, witelo.UpdateMode.Off)
+    witelo.drawText("Temperatur (BMP)", 0, 35, witelo.UpdateMode.Off)
+    witelo.drawText(convertToText(witelo.temperature()), 95, 35, witelo.UpdateMode.Off)
+    witelo.drawText("Luftdruck", 0, 45, witelo.UpdateMode.Off)
+    witelo.drawText(convertToText(witelo.pressure()), 95, 45, witelo.UpdateMode.Off)
+}
+function ANT20_BPM280_PAGE2 () {
+    witelo.drawText("AHT20 & BMP280", 0, 0, witelo.UpdateMode.Off)
+    witelo.drawText("Temperatur", 0, 15, witelo.UpdateMode.Off)
+    witelo.drawText(convertToText(witelo.temperature_aht20()), 95, 15, witelo.UpdateMode.Off)
+    witelo.drawText("Luftfeuchte", 0, 25, witelo.UpdateMode.Off)
+    witelo.drawText(convertToText(witelo.humidity_aht20()), 95, 25, witelo.UpdateMode.Off)
+    witelo.drawText("Temperatur (BMP)", 0, 35, witelo.UpdateMode.Off)
+    witelo.drawText(convertToText(witelo.temperature()), 95, 35, witelo.UpdateMode.Off)
+    witelo.drawText("Luftdruck", 0, 45, witelo.UpdateMode.Off)
+    witelo.drawText(convertToText(witelo.pressure()), 95, 45, witelo.UpdateMode.Off)
+}
+input.onButtonEvent(Button.B, input.buttonEventClick(), function () {
+    page += -1
+    if (page < 0) {
+        page = 3
+    }
+})
+let page = 0
+page = 0
+basic.forever(function () {
+    witelo.clear()
+    if (page == 1) {
+        ENS160_PAGE()
+    } else if (page == 2) {
+        ANT20_BPM280_PAGE()
+    } else if (page == 3) {
+        ANT20_BPM280_PAGE2()
+    } else {
+        startpage()
+    }
     witelo.update()
 })

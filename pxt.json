@@ -1,5 +1,5 @@
 {
-    "name": "witelo_calliope_extention",
+    "name": "witelo_calliope_extention - Copy",
     "version": "0.0.0",
     "description": "",
     "dependencies": {
@@ -27,5 +27,5 @@
     "supportedTargets": [
         "calliopemini"
     ],
-    "preferredEditor": "blocksprj"
+    "preferredEditor": "tsprj"
 }
