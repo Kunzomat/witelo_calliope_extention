@@ -2,7 +2,7 @@
  OLED SIMULATION
 ************************/
 
-namespace witelo_display {
+namespace pxsim.witelo_display {
 
     let canvas: HTMLCanvasElement
     let ctx: CanvasRenderingContext2D
@@ -20,7 +20,7 @@ namespace witelo_display {
         canvas.style.imageRendering = "pixelated"
         canvas.style.marginBottom = "10px"
 
-        document.body.appendChild(canvas)
+        (pxsim as any).document.body.appendChild(canvas)
 
         ctx = canvas.getContext("2d")
     }
@@ -49,7 +49,7 @@ namespace witelo_display {
  SENSOR SIMULATION
 ************************/
 
-namespace witelo_sim_sensors {
+namespace pxsim.witelo_sim_sensors {
 
     let temperature = 22
     let humidity = 45
@@ -68,7 +68,7 @@ namespace witelo_sim_sensors {
         let panel = document.createElement("div")
         panel.style.color = "white"
 
-        document.body.appendChild(panel)
+        (pxsim as any).document.body.appendChild(panel)
 
         function slider(name: string, min: number, max: number, value: number, callback: (v: number) => void) {
 
@@ -132,7 +132,7 @@ namespace witelo_sim_sensors {
  EXTENSION FUNCTIONS
 ************************/
 
-namespace witelo {
+namespace pxsim.witelo {
 
     export function clear() {
         witelo_display.clear()
