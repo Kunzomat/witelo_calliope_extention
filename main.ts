@@ -44,6 +44,7 @@ input.onButtonEvent(Button.B, input.buttonEventClick(), function () {
 })
 let page = 0
 page = 2
+basic.showIcon(IconNames.Heart)
 basic.forever(function () {
     witelo.clear()
     if (page == 1) {
