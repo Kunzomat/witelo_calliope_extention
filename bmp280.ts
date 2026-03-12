@@ -10,10 +10,7 @@ enum BMP280_I2C_ADDRESS {
     //% block="0x77"
     ADDR_0x77 = 0x77
 }
-/**
- * BMP280 block
- */
-//% weight=100 color=#70c0f0 icon="\uf042" block="BMP280"
+
 namespace BMP280 {
     let BMP280_I2C_ADDR = BMP280_I2C_ADDRESS.ADDR_0x77
 
@@ -79,49 +76,24 @@ namespace BMP280 {
         P = _p + ((var1 + var2 + dig_P7) >> 4)
     }
 
-    /**
-     * get pressure
-     */
-    //% blockId="BMP280_GET_PRESSURE" block="get pressure"
-    //% weight=80 blockGap=8
     export function pressure(): number {
         get();
         return Math.round((P / 100) * 100) / 100;
     }
 
-    /**
-     * get temperature
-     */
-    //% blockId="BMP280_GET_TEMPERATURE" block="get temperature"
-    //% weight=80 blockGap=8
     export function temperature(): number {
         get();
         return T;
     }
 
-    /**
-     * power on
-     */
-    //% blockId="BMP280_POWER_ON" block="Power On"
-    //% weight=61 blockGap=8
     export function PowerOn() {
         setreg(0xF4, 0x2F)
     }
 
-    /**
-     * power off
-     */
-    //% blockId="BMP280_POWER_OFF" block="Power Off"
-    //% weight=60 blockGap=8
     export function PowerOff() {
         setreg(0xF4, 0)
     }
 
-    /**
-     * set I2C address
-     */
-    //% blockId="BMP280_SET_ADDRESS" block="set address %addr"
-    //% weight=50 blockGap=8
     export function Address(addr: BMP280_I2C_ADDRESS) {
         BMP280_I2C_ADDR = addr
     }
