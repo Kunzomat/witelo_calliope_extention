@@ -27,8 +27,7 @@ namespace witelo {
     //% y.defl=0
     //% inlineInputMode=inline
     //% shim=witelo::drawText
-    export function drawText(text: string, x: number, y: number
-    ) {
+    export function drawText(text: string, x: number, y: number) {
         oled.drawText(text, x, y)
     }
     //% group="AHT20"
