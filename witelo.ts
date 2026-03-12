@@ -26,6 +26,7 @@ namespace witelo {
     //% x.defl=0
     //% y.defl=0
     //% inlineInputMode=inline
+    //% shim=witelo::drawText
     export function drawText(text: string, x: number, y: number
     ) {
         oled.drawText(text, x, y)
@@ -72,6 +73,7 @@ namespace witelo {
     }
     //% group="BMP280"
     //% block="Temperatur"
+    //% shim=witelo::temperature_bmp280
     export function temperature_bmp280(): number {
         return BMP280.temperature();
     }
