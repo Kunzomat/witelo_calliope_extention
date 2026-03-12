@@ -1,4 +1,4 @@
-namespace bmp280 {
+namespace BMP280 {
 
     const ADDR = 0x76
     let initialized = false

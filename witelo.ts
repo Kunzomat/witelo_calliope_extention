@@ -71,13 +71,11 @@ namespace witelo {
     //% group="BMP280"
     //% block="Luftdruck"
     export function pressure(): number {
-        //return BMP280.pressure();
-        return ENS160.eCO2()
+        return BMP280.pressure();
     }
     //% group="BMP280"
     //% block="Temperatur"
     export function temperature(): number {
-        //return BMP280.temperature();
-        return ENS160.eCO2()
+        return BMP280.temperature();
     }
 }

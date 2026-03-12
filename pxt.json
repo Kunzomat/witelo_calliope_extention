@@ -1,5 +1,5 @@
 {
-    "name": "witelo_calliope_extention - Copy",
+    "name": "witelo_calliope_extention",
     "version": "0.0.0",
     "description": "",
     "dependencies": {
@@ -14,7 +14,8 @@
         "font5x7.ts",
         "witelo.ts",
         "aht2x.ts",
-        "ens160.ts"
+        "ens160.ts",
+        "bmp280.ts"
     ],
     "testFiles": [
         "test.ts"
@@ -27,5 +28,5 @@
     "supportedTargets": [
         "calliopemini"
     ],
-    "preferredEditor": "blocksprj"
+    "preferredEditor": "tsprj"
 }
